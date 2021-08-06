@@ -2,8 +2,9 @@
 
 namespace Mementorize.Models
 {
-    public class CareTaker<T> : CareTakerBase<T> where T : new()
+    public class CareTaker<T> : CareTakerBase<T> 
     {
+        
         
     }
 }

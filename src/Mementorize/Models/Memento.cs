@@ -1,6 +1,6 @@
 ﻿namespace Mementorize.Models
 {
-    public class Memento<T> where T : new()
+    public class Memento<T>
     {
         private T State { get; set; }
 

@@ -3,7 +3,7 @@ using Mementorize.Models;
 
 namespace Mementorize.Abstractions
 {
-    public abstract class CareTakerBase<T> where T : new()
+    public abstract class CareTakerBase<T>
     {
         protected readonly List<Memento<T>> Mementoes;
 

@@ -2,8 +2,8 @@
 
 namespace Mementorize.Models
 {
-    public abstract class Orginator<T> : OrginatorBase<T> where T : new()
+    public abstract class Orginator<T> : OrginatorBase<T>
     {
-        
+      
     }
 }

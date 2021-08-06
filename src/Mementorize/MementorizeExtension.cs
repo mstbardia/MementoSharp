@@ -8,9 +8,8 @@ namespace Mementorize
 {
     public static class MementorizeExtension
     {
-        internal static List<MemorySlot> MemorySlots { get; set; }
-
-
+        private static readonly List<MemorySlot> MemorySlots = new();
+        
         public static bool CreateSnapshot(this object obj)
         {
             RefreshMemerySlots();
@@ -37,16 +36,14 @@ namespace Mementorize
         }
 
 
-        public static object ReturnSnapshot(this object obj , int snapshotId)
+        public static object ReturnSnapshot(this object obj , int snapshotIndex)
         {
             RefreshMemerySlots();
-            
             var existCareTake = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
-
             if (existCareTake != null)
             {
                 var objectOrginator = new Orginator<string>();
-                existCareTake.RestoreMemento(objectOrginator,snapshotId);
+                existCareTake.RestoreMemento(objectOrginator,snapshotIndex);
                 return JsonSerializer.Deserialize(objectOrginator.GetState(), obj.GetType());
             }
 
@@ -54,7 +51,13 @@ namespace Mementorize
         }
 
 
-
+        public static int SnapShotCount(this object obj)
+        {
+            var existCareTake = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
+            return existCareTake?.MementosCount() ?? 0;
+        }
+        
+        
         private static void RefreshMemerySlots()
         {
             GC.Collect();

@@ -17,10 +17,14 @@ namespace Mementorize.Abstractions
             Mementoes.Add(orginator.CreateMementoFromState());
         }
 
-        public virtual void RestoreMemento(Orginator<T> orginator,int checkpointId)
+        public virtual void RestoreMemento(Orginator<T> orginator,int checkpointIndex)
         {
-            orginator.RestoreState(Mementoes[checkpointId]);
+            orginator.RestoreState(Mementoes[checkpointIndex]);
         }
 
+        public virtual int MementosCount()
+        {
+            return Mementoes.Count;
+        }
     }
 }

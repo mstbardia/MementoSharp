@@ -4,7 +4,7 @@ namespace Mementorize.Abstractions
 {
     public abstract class OrginatorBase<T> where T : new()
     {
-        protected T State { get; set; }
+        protected T State { get; private set; }
 
         public virtual void SetState(T state)
         {
@@ -16,12 +16,17 @@ namespace Mementorize.Abstractions
             return State;
         }
         
-        public virtual Memento<T> CreateMemento()
+        public virtual Memento<T> CreateMementoFromState()
         {
             var memento = new Memento<T>();
             memento.SetState(State);
             return memento;   
         }
         
+        public virtual void RestoreState(Memento<T> memento)
+        {
+            var mementoState = memento.GetState();
+            SetState(mementoState);
+        }
     }
 }

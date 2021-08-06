@@ -5,5 +5,6 @@ namespace Mementorize
 {
     public class Class1
     {
+        
     }
 }

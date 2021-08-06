@@ -2,7 +2,7 @@
 
 namespace Mementorize.Models
 {
-    public abstract class Orginator<T> : OrginatorBase<T>
+    public class Orginator<T> : OrginatorBase<T>
     {
       
     }

@@ -6,10 +6,16 @@ namespace Mementorize.Abstractions
     {
         protected T State { get; set; }
         
-        public virtual void SetState(T state) => State = state;
-        
-        public virtual T GetState() => State;
-        
+        public virtual void SetState(T state)
+        {
+            State = state;
+        }
+
+        public virtual T GetState()
+        {
+            return State;
+        }
+
         public virtual Memento<T> CreateMementoFromState()
         {
             var memento = new Memento<T>();
@@ -17,7 +23,7 @@ namespace Mementorize.Abstractions
             return memento;   
         }
         
-        public virtual void RestoreState(Memento<T> memento)
+        public virtual void RestoreStateFromMemento(Memento<T> memento)
         {
             var mementoState = memento.GetState();
             SetState(mementoState);

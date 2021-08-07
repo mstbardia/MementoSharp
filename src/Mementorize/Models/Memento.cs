@@ -4,8 +4,14 @@
     {
         private T State { get; set; }
 
-        public void SetState(T state) => State = state;
+        public void SetState(T state)
+        {
+            State = state;
+        }
 
-        public T GetState() => State;
+        public T GetState()
+        {
+            return State;
+        }
     }
 }

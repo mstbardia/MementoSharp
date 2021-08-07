@@ -37,6 +37,7 @@ namespace Example
             var undo2 = (TestOne) instance.ReturnSnapshot(1);
             var undo3 = (TestOne) instance.ReturnSnapshot(2);
             
+            Console.WriteLine(instance.SnapshotsCount());
             Console.WriteLine(JsonSerializer.Serialize(undo1));
             Console.WriteLine(JsonSerializer.Serialize(undo2));
             Console.WriteLine(JsonSerializer.Serialize(undo3));

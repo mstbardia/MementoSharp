@@ -3,25 +3,27 @@ using Mementorize.Models;
 
 namespace Mementorize.Abstractions
 {
+    /// <summary>
+    ///  Caretaker is responsible for save and restore originator state
+    ///  by memento saved history
+    /// </summary>
+    /// <typeparam name="T">type of your keeping state</typeparam>
     public abstract class CareTakerBase<T>
     {
-        protected readonly List<Memento<T>> Mementoes;
+        protected List<Memento<T>> Mementoes { get; private set; }
 
         protected CareTakerBase()
         {
             Mementoes = new List<Memento<T>>();
         }
-
-        public virtual void SaveMemento(Orginator<T> orginator)
+        public virtual void SaveMemento(Originator<T> originator)
         {
-            Mementoes.Add(orginator.CreateMementoFromState());
+            Mementoes.Add(originator.CreateMementoFromState());
         }
-
-        public virtual void RestoreMemento(Orginator<T> orginator, int mementoIndex)
+        public virtual void RestoreMemento(Originator<T> originator, int mementoIndex)
         {
-            orginator.RestoreStateFromMemento(Mementoes[mementoIndex]);
+            originator.RestoreStateFromMemento(Mementoes[mementoIndex]);
         }
-
         public virtual int MementosCount()
         {
             return Mementoes.Count;

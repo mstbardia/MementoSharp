@@ -10,39 +10,46 @@ namespace Mementorize
     {
         private static readonly List<MemorySlot> MemorySlots = new();
 
+        /// <summary>
+        ///  Serialize object to json and put it in memento
+        ///  design pattern
+        /// </summary>
+        /// <param name="obj">target object</param>
+        /// <param name="jsonSerializerOptions">json</param>
         public static void CreateSnapshot(this object obj,
             JsonSerializerOptions jsonSerializerOptions = null)
         {
-            RefreshMemerySlots();
+            RefreshMemorySlots();
             var currentStateJson = JsonSerializer.Serialize(obj, jsonSerializerOptions);
-            var objectOrginator = new Orginator<string>();
-            objectOrginator.SetState(currentStateJson);
+            var objectOriginator = new Originator<string>();
+            objectOriginator.SetState(currentStateJson);
             var existCareTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
             if (existCareTaker == null)
             {
                 existCareTaker = new CareTaker<string>();
                 MemorySlots.Add(new MemorySlot() {CareTaker = existCareTaker, CurrentObject = new WeakReference(obj)});
             }
-            existCareTaker.SaveMemento(objectOrginator);
+            existCareTaker.SaveMemento(objectOriginator);
         }
 
 
+        
         public static object ReturnSnapshot(this object obj, int snapshotIndex,
             JsonSerializerOptions jsonSerializerOptions = null)
         {
-            RefreshMemerySlots();
+            RefreshMemorySlots();
             var existCareTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
             if (existCareTaker == null)
                 return null;
-            var objectOrginator = new Orginator<string>();
-            existCareTaker.RestoreMemento(objectOrginator, snapshotIndex);
-            return JsonSerializer.Deserialize(objectOrginator.GetState(), obj.GetType(), jsonSerializerOptions);
+            var objectOriginator = new Originator<string>();
+            existCareTaker.RestoreMemento(objectOriginator, snapshotIndex);
+            return JsonSerializer.Deserialize(objectOriginator.GetState(), obj.GetType(), jsonSerializerOptions);
         }
 
 
         public static int SnapshotsCount(this object obj)
         {
-            RefreshMemerySlots();
+            RefreshMemorySlots();
             var existCareTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
             if (existCareTaker == null)
                 return 0;
@@ -50,7 +57,7 @@ namespace Mementorize
         }
 
 
-        private static void RefreshMemerySlots()
+        private static void RefreshMemorySlots()
         {
             GC.Collect();
             MemorySlots.RemoveAll(c => c.CurrentObject.IsAlive == false);

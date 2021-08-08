@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using Mementorize;
+using Mementorize.Models;
 
 namespace Example
 {
@@ -41,6 +42,7 @@ namespace Example
             Console.WriteLine(JsonSerializer.Serialize(undo1));
             Console.WriteLine(JsonSerializer.Serialize(undo2));
             Console.WriteLine(JsonSerializer.Serialize(undo3));
+             
         }
     }
 

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Mementorize.Models;
+using Memento.Extension.Models;
 
-namespace Mementorize
+namespace Memento.Extension
 {
-    public static class MementorizeExtension
+    public static class MementoExtension
     {
         private static readonly List<MemorySlot> MemorySlots = new();
 
@@ -15,7 +15,7 @@ namespace Mementorize
         ///  design pattern
         /// </summary>
         /// <param name="obj">target object</param>
-        /// <param name="jsonSerializerOptions">json</param>
+        /// <param name="jsonSerializerOptions">json option - this method process your object state as json</param>
         public static void CreateSnapshot(this object obj,
             JsonSerializerOptions jsonSerializerOptions = null)
         {
@@ -33,7 +33,13 @@ namespace Mementorize
         }
 
 
-        
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <param name="obj">target object</param>
+        /// <param name="snapshotIndex">backward step that old object state</param>
+        /// <param name="jsonSerializerOptions">json option - this method process your object state as json</param>
+        /// <returns></returns>
         public static object ReturnSnapshot(this object obj, int snapshotIndex,
             JsonSerializerOptions jsonSerializerOptions = null)
         {
@@ -46,7 +52,11 @@ namespace Mementorize
             return JsonSerializer.Deserialize(objectOriginator.GetState(), obj.GetType(), jsonSerializerOptions);
         }
 
-
+        /// <summary>
+        ///  return count of existed state of this object in history
+        /// </summary>
+        /// <param name="obj">target object</param>
+        /// <returns></returns>
         public static int SnapshotsCount(this object obj)
         {
             RefreshMemorySlots();
@@ -57,6 +67,7 @@ namespace Mementorize
         }
 
 
+        //clearn history from collected object  
         private static void RefreshMemorySlots()
         {
             GC.Collect();

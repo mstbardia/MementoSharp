@@ -1,6 +1,6 @@
-﻿using Mementorize.Models;
+﻿using Memento.Extension.Models;
 
-namespace Mementorize.Abstractions
+namespace Memento.Extension.Abstractions
 {
     /// <summary>
     ///  the main class that should create memento from its own state

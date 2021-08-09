@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mementorize.Models
+namespace Memento.Extension.Models
 {
     /// <summary>
     /// the class that keeps low reference on your object and its caretaker

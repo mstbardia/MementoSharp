@@ -1,4 +1,4 @@
-﻿namespace Mementorize.Models
+﻿namespace Memento.Extension.Models
 {
     /// <summary>
     /// the class that hold state encapsulated in this pattern 

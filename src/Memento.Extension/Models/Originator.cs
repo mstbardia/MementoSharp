@@ -1,6 +1,6 @@
-﻿using Mementorize.Abstractions;
+﻿using Memento.Extension.Abstractions;
 
-namespace Mementorize.Models
+namespace Memento.Extension.Models
 {
     /// <summary>
     /// implementation of <see cref="OriginatorBase{T}"/>

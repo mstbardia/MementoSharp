@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Text.Json;
-using Mementorize;
-using Mementorize.Models;
 
-namespace Example
+namespace Memento.Extension.Example
 {
     class Program
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text.Json;
+using Memento.Extension;
 
-namespace Memento.Extension.Example
+namespace ConsoleApp.Example
 {
     class Program
     {

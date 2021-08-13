@@ -1,1 +1,17 @@
-# Mementorize
+# Memento Extension
+
+Memento is design pattern that capture object internal state , so the object
+can be restored to this state later.
+this project provide a extension on object type that create multiple snapshot of your
+object and restore state by snapshot id whenever the object is exist.
+
+**Example :**
+
+        `var instance = new TestOne(1, "One", new[] {1, 2, 3});
+             instance.CreateSnapshot();
+
+             instance.Id = 2;
+             instance.Name = "Two";
+             instance.Nestes.Numbers = new[] {4, 5, 6};
+
+             var undo1 = instance.ReturnSnapshot(0);  // result => {"Id":1,"Name":"One","Nestes":{"Numbers":[1,2,3]}}`

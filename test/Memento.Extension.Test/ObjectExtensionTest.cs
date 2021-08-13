@@ -26,7 +26,7 @@ namespace Memento.Extension.Test
         }
 
         [Fact]
-        public void Should_Clear_Memory_When_GC_Collected_Target_Object()
+        public void Should_Return_Null_When_Target_Instance_Changed()
         {
             const string name = "name-test1";
             const int number = 5;

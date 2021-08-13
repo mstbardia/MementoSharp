@@ -2,6 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <LangVersion>default</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Memento Extension</Title>
+        <Authors>Bardia Mostafavi</Authors>
+        <Description>Memento pattern extension on object type to create snapshot of object state and restore it by snapshot id.</Description>
+        <Copyright>MIT</Copyright>
+        <PackageLicenseUrl>MIT</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/mstbardia/Memento.Extension</RepositoryUrl>
+        <RepositoryType>github</RepositoryType>
+        <Company>Bardia Mostafavi</Company>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
     </PropertyGroup>
 
 </Project>

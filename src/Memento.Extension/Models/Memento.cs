@@ -6,6 +6,11 @@
     /// <typeparam name="T">type of your keeping state</typeparam>
     public class Memento<T>
     {
+        /// <summary>
+        /// Note That !!!
+        /// if you want use it for mutable reference type (class , ...)
+        /// you should pass a clone of your target object to state
+        /// </summary>
         private T State { get; set; }
         public void SetState(T state)
         {

@@ -16,8 +16,8 @@ namespace Memento.Extension
         /// </summary>
         /// <param name="obj">target object</param>
         /// <param name="jsonSerializerOptions">json option - this method process your object state as json</param>
-        public static void CreateSnapshot(this object obj,
-            JsonSerializerOptions jsonSerializerOptions = null)
+        public static void CreateSnapshot<T>(this T obj,
+            JsonSerializerOptions jsonSerializerOptions = null) where T : class , new() 
         {
             RefreshMemorySlots();
             var currentStateJson = JsonSerializer.Serialize(obj, jsonSerializerOptions);
@@ -34,14 +34,14 @@ namespace Memento.Extension
 
 
         /// <summary>
-        ///  
+        ///  deserialize stored snapshot of object and return it in type
         /// </summary>
         /// <param name="obj">target object</param>
         /// <param name="snapshotIndex">backward step that old object state</param>
         /// <param name="jsonSerializerOptions">json option - this method process your object state as json</param>
         /// <returns></returns>
-        public static object ReturnSnapshot(this object obj, int snapshotIndex,
-            JsonSerializerOptions jsonSerializerOptions = null)
+        public static T ReturnSnapshot<T>(this T obj, int snapshotIndex,
+            JsonSerializerOptions jsonSerializerOptions = null) where T : class , new()
         {
             RefreshMemorySlots();
             var existCareTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
@@ -49,7 +49,7 @@ namespace Memento.Extension
                 return null;
             var objectOriginator = new Originator<string>();
             existCareTaker.RestoreMemento(objectOriginator, snapshotIndex);
-            return JsonSerializer.Deserialize(objectOriginator.GetState(), obj.GetType(), jsonSerializerOptions);
+            return JsonSerializer.Deserialize<T>(objectOriginator.GetState(),jsonSerializerOptions);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Memento.Extension
         }
 
 
-        //clearn history from collected object  
+        //clear history from collected object  
         private static void RefreshMemorySlots()
         {
             GC.Collect();

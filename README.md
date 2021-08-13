@@ -3,7 +3,7 @@
 Memento is design pattern that capture object internal state , so the object
 can be restored to this state later.
 this project provide a extension on object type that create multiple snapshot of your
-object and restore state by snapshot id whenever the object is exist.
+object and restore state by snapshot id as long as the object exist.
 
 
 

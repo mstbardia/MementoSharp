@@ -1,29 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Memento.Extension;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace ConsoleApp.Example
+namespace WebApplication.Controllers
 {
-    class Program
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
     {
-        static void Main(string[] args)
+        private static readonly string[] Summaries = new[]
         {
-            var x = new B();
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
 
-            x.RunIt();
-            
-            Console.ReadKey();
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
         }
-    }
-    
-    public class B
-    {
-        public void RunIt()
+
+        [HttpGet]
+        public IEnumerable<WeatherForecast> Get()
         {
             var instance = new WithParameterlessConstructorClass(1, "One", new[] {1, 2, 3});
             var instanceTwo = new WithoutParameterlessConstructorClass(500, new[] {500, 501, 502});
-
-
+            
+            
             instanceTwo.SetName("FiveHundred");
 
 
@@ -70,10 +77,28 @@ namespace ConsoleApp.Example
             Console.WriteLine(JsonSerializer.Serialize(undo500));
             Console.WriteLine(JsonSerializer.Serialize(undo600));
             Console.WriteLine(JsonSerializer.Serialize(undo700));
+
+  
+            
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = rng.Next(-20, 55),
+                    Summary = Summaries[rng.Next(Summaries.Length)]
+                })
+                .ToArray();
         }
+        
     }
-
-
+    
+    
+    
+    
+    
+    
+    
+    
     class WithParameterlessConstructorClass
     {
         public WithParameterlessConstructorClass(int id, string name, int[] numbers)

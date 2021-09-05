@@ -9,7 +9,7 @@ namespace Memento.Extension.Abstractions
     ///  in way you like. 
     /// </summary>
     /// <typeparam name="T">type of your keeping state</typeparam>
-    public abstract class OriginatorBase<T>
+    internal abstract class OriginatorBase<T>
     {
         protected T State { get; private set; }
         

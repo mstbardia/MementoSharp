@@ -7,8 +7,16 @@ namespace Memento.Extension.Models
     /// to use it save or restore state and be aware of object is
     /// exist or collected.
     /// </summary>
-    public class MemorySlot
+    internal sealed class MemorySlot
     {
+
+        public MemorySlot()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+        
+        public string Id { get; private set; }
+        
         public WeakReference CurrentObject { get; set; }
         
         public CareTaker<string> CareTaker { get; set; }

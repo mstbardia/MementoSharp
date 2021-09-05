@@ -4,7 +4,7 @@
     /// the class that hold state encapsulated in this pattern 
     /// </summary>
     /// <typeparam name="T">type of your keeping state</typeparam>
-    public class Memento<T>
+    internal class Memento<T>
     {
         /// <summary>
         /// Note That !!!

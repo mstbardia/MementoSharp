@@ -6,7 +6,7 @@ namespace Memento.Extension.Models
     ///  implementation of <see cref="CareTakerBase{T}"/>
     /// </summary>
     /// <typeparam name="T">type of your state</typeparam>
-    public class CareTaker<T> : CareTakerBase<T> 
+    internal sealed class CareTaker<T> : CareTakerBase<T> 
     {
        
     }

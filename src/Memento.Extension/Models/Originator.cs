@@ -6,7 +6,7 @@ namespace Memento.Extension.Models
     /// implementation of <see cref="OriginatorBase{T}"/>
     /// </summary>
     /// <typeparam name="T">type of your keeping state</typeparam>
-    public class Originator<T> : OriginatorBase<T>
+    internal sealed class Originator<T> : OriginatorBase<T>
     {
       
     }

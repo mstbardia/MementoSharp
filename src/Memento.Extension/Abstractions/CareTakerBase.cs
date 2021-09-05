@@ -8,7 +8,7 @@ namespace Memento.Extension.Abstractions
     ///  by memento saved history
     /// </summary>
     /// <typeparam name="T">type of your keeping state</typeparam>
-    public abstract class CareTakerBase<T>
+    internal abstract class CareTakerBase<T>
     {
         protected List<Memento<T>> Mementoes { get; private set; }
 
@@ -18,9 +18,9 @@ namespace Memento.Extension.Abstractions
         }
         
         /// <summary>
-        /// get memento from orginator and save it in memento history list
+        /// get memento from originator and save it in memento history list
         /// </summary>
-        /// <param name="originator">orginator of your type</param>
+        /// <param name="originator">originator of your type</param>
         public virtual void SaveMemento(Originator<T> originator)
         {
             Mementoes.Add(originator.CreateMementoFromState());
@@ -29,7 +29,7 @@ namespace Memento.Extension.Abstractions
         /// <summary>
         ///  extract memento from memento history list by id
         /// </summary>
-        /// <param name="originator">orginator of your type</param>
+        /// <param name="originator">originator of your type</param>
         /// <param name="mementoIndex">id of memento in history list</param>
         public virtual void RestoreMemento(Originator<T> originator, int mementoIndex)
         {

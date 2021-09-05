@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Timers;
 using Memento.Extension.Models;
 
 namespace Memento.Extension
@@ -9,61 +10,75 @@ namespace Memento.Extension
     public static class MementoExtension
     {
         private static readonly List<MemorySlot> MemorySlots = new();
-
+        private static Timer GcTimer { get; set; }
+        
         /// <summary>
         ///  Serialize object to json and put it in memento
         ///  design pattern
         /// </summary>
         /// <param name="obj">target object</param>
         /// <param name="jsonSerializerOptions">json option - this method process your object state as json</param>
-        public static void CreateSnapshot<T>(this T obj,
-            JsonSerializerOptions jsonSerializerOptions = null) where T : class , new() 
+        public static void SaveState<T>(this T obj,
+            JsonSerializerOptions jsonSerializerOptions = null) where T : class
         {
             RefreshMemorySlots();
             var currentStateJson = JsonSerializer.Serialize(obj, jsonSerializerOptions);
             var objectOriginator = new Originator<string>();
             objectOriginator.SetState(currentStateJson);
-            var existCareTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
-            if (existCareTaker == null)
+            var careTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
+            if (careTaker == null)
             {
-                existCareTaker = new CareTaker<string>();
-                MemorySlots.Add(new MemorySlot() {CareTaker = existCareTaker, CurrentObject = new WeakReference(obj)});
+                careTaker = new CareTaker<string>();
+                MemorySlots.Add(new MemorySlot() {CareTaker = careTaker, CurrentObject = new WeakReference(obj)});
             }
-            existCareTaker.SaveMemento(objectOriginator);
+            careTaker.SaveMemento(objectOriginator);
+            if (GcTimer == null)
+                InitiateGcTimer();
         }
 
 
         /// <summary>
-        ///  deserialize stored snapshot of object and return it in type
+        ///  deserialize stored state of object and return it in type
         /// </summary>
         /// <param name="obj">target object</param>
-        /// <param name="snapshotIndex">backward step that old object state</param>
+        /// <param name="stateIndex">backward step that old object state</param>
         /// <param name="jsonSerializerOptions">json option - this method process your object state as json</param>
         /// <returns></returns>
-        public static T ReturnSnapshot<T>(this T obj, int snapshotIndex,
-            JsonSerializerOptions jsonSerializerOptions = null) where T : class , new()
+        public static T RestoreState<T>(this T obj, int stateIndex,
+            JsonSerializerOptions jsonSerializerOptions = null) where T : class, new()
         {
             RefreshMemorySlots();
             var existCareTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
-            if (existCareTaker == null)
+            if (existCareTaker is null)
                 return null;
             var objectOriginator = new Originator<string>();
-            existCareTaker.RestoreMemento(objectOriginator, snapshotIndex);
-            return JsonSerializer.Deserialize<T>(objectOriginator.GetState(),jsonSerializerOptions);
+            existCareTaker.RestoreMemento(objectOriginator, stateIndex);
+            return JsonSerializer.Deserialize<T>(objectOriginator.GetState(), jsonSerializerOptions);
         }
+        
+        public static TOut RestoreState<TOut>(this object obj, int stateIndex,
+            JsonSerializerOptions jsonSerializerOptions = null) where TOut : class
+        {
+            RefreshMemorySlots();
+            var existCareTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
+            if (existCareTaker is null)
+                return null;
+            var objectOriginator = new Originator<string>();
+            existCareTaker.RestoreMemento(objectOriginator, stateIndex);
+            return JsonSerializer.Deserialize<TOut>(objectOriginator.GetState(), jsonSerializerOptions);
+        }
+
 
         /// <summary>
         ///  return count of existed state of this object in history
         /// </summary>
         /// <param name="obj">target object</param>
         /// <returns></returns>
-        public static int SnapshotsCount(this object obj)
+        public static int SavedStatesCount(this object obj)
         {
             RefreshMemorySlots();
             var existCareTaker = MemorySlots.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
-            if (existCareTaker == null)
-                return 0;
-            return existCareTaker.MementosCount();
+            return existCareTaker?.MementosCount() ?? 0;
         }
 
 
@@ -72,6 +87,28 @@ namespace Memento.Extension
         {
             GC.Collect();
             MemorySlots.RemoveAll(c => c.CurrentObject.IsAlive == false);
+        }
+        
+        //initiate timer to call GC periodically to clear memory list if target object collected
+        private static void InitiateGcTimer()
+        {
+            if (GcTimer == null)
+            {
+                GcTimer = new Timer(1000);
+                GcTimer.Elapsed += GcTimerOnElapsed;
+                GcTimer.AutoReset = false;
+                GcTimer.Enabled = true;
+            }
+        }
+        
+        //gc timer do
+        private static void GcTimerOnElapsed(object sender, ElapsedEventArgs e)
+        {
+            RefreshMemorySlots();
+            Console.WriteLine(MemorySlots.Count);
+            if (MemorySlots.Count != 0)
+                GcTimer.Start();
+            GcTimer.Dispose();
         }
     }
 }

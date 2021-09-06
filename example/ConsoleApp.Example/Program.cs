@@ -8,15 +8,17 @@ namespace ConsoleApp.Example
     {
         static void Main(string[] args)
         {
-            var x = new B();
+            var x = new ExampleClass();
 
             x.RunIt();
             
             Console.ReadKey();
+            
+            Console.WriteLine(MementoExtension.SavedObjectCount());  //should be 0 . that means extension work well on monitoring object life and gc.
         }
     }
     
-    public class B
+    public class ExampleClass
     {
         public void RunIt()
         {
@@ -57,7 +59,7 @@ namespace ConsoleApp.Example
             var undo3 = instance.RestoreState(2);
 
 
-            Console.WriteLine(instance.SavedStatesCount());
+            Console.WriteLine(instance.MemorySlotListCount());
             Console.WriteLine(JsonSerializer.Serialize(undo1));
             Console.WriteLine(JsonSerializer.Serialize(undo2));
             Console.WriteLine(JsonSerializer.Serialize(undo3));
@@ -66,7 +68,7 @@ namespace ConsoleApp.Example
             var undo600 = instanceTwo.RestoreState<TestReadmodel>(1);
             var undo700 = instanceTwo.RestoreState<TestReadmodel>(2);
 
-            Console.WriteLine(instanceTwo.SavedStatesCount());
+            Console.WriteLine(instanceTwo.MemorySlotListCount());
             Console.WriteLine(JsonSerializer.Serialize(undo500));
             Console.WriteLine(JsonSerializer.Serialize(undo600));
             Console.WriteLine(JsonSerializer.Serialize(undo700));

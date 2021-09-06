@@ -35,7 +35,7 @@ namespace Memento.Extension.Test
 
             fakeClass.SaveState();
 
-            fakeClass = new Fixture().Build<FakeClass>().Create();  // Gc Collect the old object
+            fakeClass = new Fixture().Build<FakeClass>().Create();  
 
             fakeClass = fakeClass.RestoreState(0);
 

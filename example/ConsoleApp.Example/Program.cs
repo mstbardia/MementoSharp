@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.Json;
-using Memento.Extension;
+using MementoSharp;
 
 namespace ConsoleApp.Example
 {

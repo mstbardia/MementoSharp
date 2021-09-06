@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Memento.Extension.Models;
+using MementoSharp.Internal;
 
-namespace Memento.Extension.Abstractions
+namespace MementoSharp.Abstractions
 {
     /// <summary>
     ///  Caretaker is responsible for save and restore originator state

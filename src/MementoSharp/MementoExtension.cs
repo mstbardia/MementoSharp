@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using Memento.Extension.Models;
+using MementoSharp.Internal;
 using Newtonsoft.Json;
 
-namespace Memento.Extension
+namespace MementoSharp
 {
     public static class MementoExtension
     {
@@ -113,13 +113,11 @@ namespace Memento.Extension
         //initiate timer to call GC periodically to clear memory list if target object collected
         private static void InitiateGcTimer()
         {
-            if (GcTimer == null)
-            {
-                GcTimer = new Timer(1000);
-                GcTimer.Elapsed += GcTimerOnElapsed;
-                GcTimer.AutoReset = false;
-                GcTimer.Enabled = true;
-            }
+            if (GcTimer != null) return;
+            GcTimer = new Timer(1000);
+            GcTimer.Elapsed += GcTimerOnElapsed;
+            GcTimer.AutoReset = false;
+            GcTimer.Enabled = true;
         }
 
         //gc timer do

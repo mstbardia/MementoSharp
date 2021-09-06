@@ -2,7 +2,7 @@ using System;
 using AutoFixture;
 using Xunit;
 
-namespace Memento.Extension.Test
+namespace MementoSharp.Test
 {
     public class ObjectExtensionTest
     {

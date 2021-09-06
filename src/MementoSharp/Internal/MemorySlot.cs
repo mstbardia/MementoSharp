@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Memento.Extension.Models
+namespace MementoSharp.Internal
 {
     /// <summary>
     /// the class that keeps low reference on your object and its caretaker

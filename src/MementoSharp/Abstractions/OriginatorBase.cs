@@ -1,6 +1,6 @@
-﻿using Memento.Extension.Models;
+﻿using MementoSharp.Internal;
 
-namespace Memento.Extension.Abstractions
+namespace MementoSharp.Abstractions
 {
     /// <summary>
     ///  the main class that should create memento from its own state

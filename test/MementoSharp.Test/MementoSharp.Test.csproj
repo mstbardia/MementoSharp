@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Memento.Extension\Memento.Extension.csproj" />
+      <ProjectReference Include="..\..\src\MementoSharp\MementoSharp.csproj" />
     </ItemGroup>
 
 </Project>

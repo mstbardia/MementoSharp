@@ -1,4 +1,4 @@
-﻿namespace Memento.Extension.Models
+﻿namespace MementoSharp.Internal
 {
     /// <summary>
     /// the class that hold state encapsulated in this pattern 

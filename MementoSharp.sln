@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Extension", "src\Memento.Extension\Memento.Extension.csproj", "{FD5C592F-8109-4858-8D2D-7814B8DAD6D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MementoSharp", "src\MementoSharp\MementoSharp.csproj", "{FD5C592F-8109-4858-8D2D-7814B8DAD6D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.Example", "example\ConsoleApp.Example\ConsoleApp.Example.csproj", "{D422DDD4-9EBF-47DC-B804-835876A03B57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Memento.Extension.Test", "test\Memento.Extension.Test\Memento.Extension.Test.csproj", "{89780040-D5D1-4FFC-8611-C3B4F11BB699}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MementoSharp.Test", "test\MementoSharp.Test\MementoSharp.Test.csproj", "{89780040-D5D1-4FFC-8611-C3B4F11BB699}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
-﻿using Memento.Extension.Abstractions;
+﻿using MementoSharp.Abstractions;
 
-namespace Memento.Extension.Models
+namespace MementoSharp.Internal
 {
     /// <summary>
     ///  implementation of <see cref="CareTakerBase{T}"/>

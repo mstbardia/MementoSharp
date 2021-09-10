@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp.Example", "examp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MementoSharp.Test", "test\MementoSharp.Test\MementoSharp.Test.csproj", "{89780040-D5D1-4FFC-8611-C3B4F11BB699}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication.Example", "example\WebApplication.Example\WebApplication.Example.csproj", "{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,5 +60,17 @@ Global
 		{89780040-D5D1-4FFC-8611-C3B4F11BB699}.Release|x64.Build.0 = Release|Any CPU
 		{89780040-D5D1-4FFC-8611-C3B4F11BB699}.Release|x86.ActiveCfg = Release|Any CPU
 		{89780040-D5D1-4FFC-8611-C3B4F11BB699}.Release|x86.Build.0 = Release|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Debug|x64.Build.0 = Debug|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Debug|x86.Build.0 = Debug|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Release|x64.ActiveCfg = Release|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Release|x64.Build.0 = Release|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Release|x86.ActiveCfg = Release|Any CPU
+		{33D4C95A-7EFF-47E6-B305-F76F9C1157BC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

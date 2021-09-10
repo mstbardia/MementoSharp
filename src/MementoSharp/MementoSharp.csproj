@@ -4,12 +4,12 @@
         <TargetFramework>net5.0</TargetFramework>
         <LangVersion>default</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>Memento Extension</Title>
+        <Title>MementoSharp</Title>
         <Authors>Bardia Mostafavi</Authors>
-        <Description>Memento pattern extension on object type to create state of object state and restore it by state id.</Description>
+        <Description>MementoSharp is a design pattern extension on object type to save state of object and restore it by state index.</Description>
         <Copyright>MIT</Copyright>
         <PackageLicenseUrl>MIT</PackageLicenseUrl>
-        <RepositoryUrl>https://github.com/mstbardia/Memento.Extension</RepositoryUrl>
+        <RepositoryUrl>https://github.com/mstbardia/MementoSharp</RepositoryUrl>
         <RepositoryType>github</RepositoryType>
         <Company>Bardia Mostafavi</Company>
         <AssemblyVersion>1.0.0</AssemblyVersion>

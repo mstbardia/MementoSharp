@@ -19,13 +19,14 @@ namespace MementoSharp
         /// <param name="obj">target object</param>
         /// <param name="jsonSerializerSettings">json option - this method process your object state as json</param>
         public static void SaveState<T>(this T obj,
-            JsonSerializerSettings jsonSerializerSettings = null) where T : class
+            JsonSerializerSettings jsonSerializerSettings = null)  
         {
             RefreshMemorySlots();
             var currentStateJson = JsonConvert.SerializeObject(obj, jsonSerializerSettings);
             var objectOriginator = new Originator<string>();
             objectOriginator.SetState(currentStateJson);
-            var careTaker = MemorySlotList.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
+            var careTaker = MemorySlotList
+                .SingleOrDefault(c => c.CurrentObject.Target != null && c.CurrentObject.Target.Equals(obj))?.CareTaker;
             if (careTaker == null)
             {
                 careTaker = new CareTaker<string>();
@@ -37,7 +38,6 @@ namespace MementoSharp
                 InitiateGcTimer();
         }
 
-
         /// <summary>
         ///  deserialize stored state of object and return it in type
         /// </summary>
@@ -46,17 +46,17 @@ namespace MementoSharp
         /// <param name="jsonSerializerSettings">json option - this method process your object state as json</param>
         /// <returns></returns>
         public static T RestoreState<T>(this T obj, int stateIndex,
-            JsonSerializerSettings jsonSerializerSettings = null) where T : class, new()
+            JsonSerializerSettings jsonSerializerSettings = null) 
         {
             RefreshMemorySlots();
-            var existCareTaker = MemorySlotList.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
+            var existCareTaker = MemorySlotList
+                .SingleOrDefault(c => c.CurrentObject.Target != null && c.CurrentObject.Target.Equals(obj))?.CareTaker;
             if (existCareTaker is null)
-                return null;
+                return default;
             var objectOriginator = new Originator<string>();
             existCareTaker.RestoreMemento(objectOriginator, stateIndex);
             return JsonConvert.DeserializeObject<T>(objectOriginator.GetState(), jsonSerializerSettings);
         }
-
 
         /// <summary>
         ///  deserialize stored state of object and return it in selected type
@@ -66,42 +66,40 @@ namespace MementoSharp
         /// <param name="jsonSerializerSettings">json option - this method process your object state as json</param>
         /// <returns></returns>
         public static TOut RestoreState<TOut>(this object obj, int stateIndex,
-            JsonSerializerSettings jsonSerializerSettings = null) where TOut : class
+            JsonSerializerSettings jsonSerializerSettings = null)  
         {
             RefreshMemorySlots();
-            var existCareTaker = MemorySlotList.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
+            var existCareTaker = MemorySlotList
+                .SingleOrDefault(c => c.CurrentObject.Target != null && c.CurrentObject.Target.Equals(obj))?.CareTaker;
             if (existCareTaker is null)
-                return null;
+                return default;
             var objectOriginator = new Originator<string>();
             existCareTaker.RestoreMemento(objectOriginator, stateIndex);
             return JsonConvert.DeserializeObject<TOut>(objectOriginator.GetState(), jsonSerializerSettings);
         }
-
 
         /// <summary>
         ///  return count of existed state of this object in history
         /// </summary>
         /// <param name="obj">target object</param>
         /// <returns></returns>
-        public static int MemorySlotListCount(this object obj)
+        public static int StatesCount(this object obj)
         {
             RefreshMemorySlots();
             var existCareTaker = MemorySlotList.SingleOrDefault(c => c.CurrentObject.Target == obj)?.CareTaker;
             return existCareTaker?.MementosCount() ?? 0;
         }
 
-        
         /// <summary>
         ///  return count of entire object exist in memento
         /// </summary>
         /// <returns></returns>
-        public static int SavedObjectCount()
+        public static int SavedObjectsCount()
         {
             RefreshMemorySlots();
             return MemorySlotList.Count;
         }
-        
-        
+
 
         //clear history from collected object  
         private static void RefreshMemorySlots()
@@ -110,11 +108,11 @@ namespace MementoSharp
             MemorySlotList.RemoveAll(c => c.CurrentObject.IsAlive == false);
         }
 
-        //initiate timer to call GC periodically to clear memory list if target object collected
+        //initiate timer to clear memory list if target object collected
         private static void InitiateGcTimer()
         {
             if (GcTimer != null) return;
-            GcTimer = new Timer(1000);
+            GcTimer = new Timer(300000); // run per 5 min
             GcTimer.Elapsed += GcTimerOnElapsed;
             GcTimer.AutoReset = false;
             GcTimer.Enabled = true;

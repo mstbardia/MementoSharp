@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Text.Json;
+using System.Globalization;
 using MementoSharp;
+using Newtonsoft.Json;
 
 namespace ConsoleApp.Example
 {
@@ -14,7 +15,7 @@ namespace ConsoleApp.Example
             
             Console.ReadKey();
             
-            Console.WriteLine(MementoExtension.SavedObjectCount());  //should be 0 . that means extension work well on monitoring object life and gc.
+            Console.WriteLine(MementoExtension.SavedObjectsCount());  //should be 0 because gc should collected x . that means extension work well on monitoring object life and gc.
         }
     }
     
@@ -24,12 +25,13 @@ namespace ConsoleApp.Example
         {
             var instance = new WithParameterlessConstructorClass(1, "One", new[] {1, 2, 3});
             var instanceTwo = new WithoutParameterlessConstructorClass(500, new[] {500, 501, 502});
-
-
             instanceTwo.SetName("FiveHundred");
 
 
-            instance.SaveState();
+            instance.SaveState(new JsonSerializerSettings()
+            {
+                Culture = CultureInfo.InvariantCulture
+            });
             instanceTwo.SaveState();
 
             instance.Id = 2;
@@ -54,24 +56,24 @@ namespace ConsoleApp.Example
             instanceTwo.SaveState();
 
 
-            var undo1 = instance.RestoreState(0);
+            var undo1 = instance.RestoreState(0,new JsonSerializerSettings());
             var undo2 = instance.RestoreState(1);
             var undo3 = instance.RestoreState(2);
 
 
-            Console.WriteLine(instance.MemorySlotListCount());
-            Console.WriteLine(JsonSerializer.Serialize(undo1));
-            Console.WriteLine(JsonSerializer.Serialize(undo2));
-            Console.WriteLine(JsonSerializer.Serialize(undo3));
+            Console.WriteLine(instance.StatesCount());
+            Console.WriteLine(JsonConvert.SerializeObject(undo1));
+            Console.WriteLine(JsonConvert.SerializeObject(undo2));
+            Console.WriteLine(JsonConvert.SerializeObject(undo3));
 
             var undo500 = instanceTwo.RestoreState<TestReadmodel>(0);
             var undo600 = instanceTwo.RestoreState<TestReadmodel>(1);
             var undo700 = instanceTwo.RestoreState<TestReadmodel>(2);
 
-            Console.WriteLine(instanceTwo.MemorySlotListCount());
-            Console.WriteLine(JsonSerializer.Serialize(undo500));
-            Console.WriteLine(JsonSerializer.Serialize(undo600));
-            Console.WriteLine(JsonSerializer.Serialize(undo700));
+            Console.WriteLine(instanceTwo.StatesCount());
+            Console.WriteLine(JsonConvert.SerializeObject(undo500));
+            Console.WriteLine(JsonConvert.SerializeObject(undo600));
+            Console.WriteLine(JsonConvert.SerializeObject(undo700));
         }
     }
 

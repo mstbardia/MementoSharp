@@ -7,7 +7,7 @@ object.
 
 
 **Simple Example :**
-
+```c#
         var instance = new TestOne(1, "One", new[] {1, 2, 3});
              
             instance.SaveState();
@@ -28,13 +28,13 @@ object.
 
             var undo1 = instance.RestoreState(0);  // result => {"Id":1,"Name":"One","Nestes":{"Numbers":[1,2,3]}}
             var undo2 = instance.RestoreState(1);  // result => {"Id":2,"Name":"Two","Nestes":{"Numbers":[4,5,6]}}
-
+```
 
 MementoSharp use json serialization to keep state so you can pass JsonSerializerSettings
 to save or restore method if you use complex object to serialize.
 
 **Example :**
-            
+ ```c#           
             var instance = new TestOne(1, "One", new[] {1, 2, 3});
 
             instance.SaveState(new JsonSerializerSettings()
@@ -49,9 +49,10 @@ to save or restore method if you use complex object to serialize.
             var undo1 = instance.RestoreState(0, new JsonSerializerSettings(){
                 Culture = CultureInfo.InvariantCulture
             });
-
+```
 also two method include to show how many states of target object exist and also how many 
 object are exist on extension.
-
+ ```c#      
             MementoExtension.SavedObjectsCount();  // give the entire count of objects exist on memento
             instance.StatesCount(); // give states count of target instance
+```

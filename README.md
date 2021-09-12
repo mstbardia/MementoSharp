@@ -5,7 +5,16 @@ and restore it on runtime by state index.
 the extension also monitor the life of object to release its memory of object when gc collect the target
 object.
 
+<p align="left">       
+  <a href="https://github.com/mstbardia/MementoSharp/actions/workflows/publish-package.yml">
+    <img src="https://github.com/mstbardia/MementoSharp/actions/workflows/publish-package.yml/badge.svg?branch=main">
+  </a>
+  <a href="https://www.nuget.org/packages/MementoSharp">
+    <img src="https://img.shields.io/nuget/v/MementoSharp?style=plastic">
+  </a>
+</p>
 
+  
 **Simple Example :**
 ```c#
         var instance = new TestOne(1, "One", new[] {1, 2, 3});
